@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>学员推荐奖励</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<meta name="MobileOptimized" content="320">
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="./css/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
+<link href="./css/common.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="./css/bootstrap-datepicker.min.css" type="text/css">
+	
+</head>
+<body style="background:rgba(255,255,255,0.2);">
+	<div class="container-fluid right-content">
+		<div class="row">
+			<div class="col-md-12 ">
+				<h3 class="right-title">学员推荐奖金统计</h3>
+			</div>
+		</div>
+		<div class="row search">
+			<div class="col-sm-12 col-md-12 col-lg-12">
+				<form class="form-inline">
+					<div class="form-reco-search-top">
+						<div class="col-sm-3 col-md-2 form-btns ">
+							<input type="text" class="form-control" id="reIdName" name="" placeholder="输入ID或姓名">
+						</div>
+						<div class="col-md-2 select form-btns ">
+							<select name="id-name" id="school-condition">
+								<option value="id" >按ID查询</option>
+								<option value="name" >按姓名查询</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-reco-search-top">
+						<div class="form-group width-p-14 ">
+							<label class="sr-only" for="from-day"></label>
+							<div class="input-group  form-btns form-reco-firstdata-btn">
+								<input id="fromDate" size="16" type="text" value="" readonly class="form_datetime form-control" name="start">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-th"></span>
+								</div>
+							</div>
+						</div>
+						<span class="data-sign">至</span>
+						<div class="form-group width-p-14">
+							<label class="sr-only" for="to-day"></label>
+							<div class="input-group  form-btns">
+								<input id="toDate" size="16" type="text" value="" readonly class="form_datetime form-control" name="end">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-th"></span>
+								</div>
+							</div>
+						</div>
+						<button type="button" class="btn btn-primary school-bonus-search ">查询</button>
+					</div>
+
+
+				</form>
+			</div>
+		</div>
+		<div class="row student-info">
+			<div class="col-md-12" id="SchoolqueryRecommend" >
+
+			</div>
+		</div>
+	</div>
+	<script src="./js/jquery-3.1.1.js"></script>
+	<script src="./js/bootstrap.min.js"></script>
+	<script src="./js/bootstrap-table.min.js"></script>
+	<script src="./js/bootstrap-table-zh-CN.js"></script>
+	<script src="./js/bootstrap-datepicker.min.js"></script>
+	<script src="./js/bootstrap-datepicker.zh-CN.js"></script>
+	<script src="./js/common.js"></script>
+	<script src="./js/dataTable.js"></script>
+	<script>
+	$(function(){
+		$(".form_datetime").datepicker({
+	        format: "yyyy年mm月dd日",
+	        language: 'zh-CN',
+	        autoclose: true,
+			weekStart : 0,
+			todayBtn :'linked',
+			startView: 'year',
+			minView:'month',
+			maxView:'decade',
+			pickerPosition: "bottom-right",
+	
+		});
+		function schoolStudentRecommend(){
+			var title = [[
+				{
+					title: 'id',
+					field: 'id',
+					align: 'center',
+					width: '16.2%'	
+				},{
+					title: '姓名',
+					field: 'name',
+					align: 'center',
+					width: '16.2%'	
+				},{
+					title: '学员类型',
+					field: 'type',
+					align: 'center',
+					width: '16.2%'	
+				},{
+					title: '所属学校',
+					field: 'school',
+					align: 'center',
+					width: '16.2%'	
+				},{
+					title: '激活时间',
+					field: 'time',
+					align: 'center',
+					width: '16.2%'	
+				},{
+					title: '推广奖金',
+					field: 'bouns',
+					align: 'center',
+					width: '16.2%'	
+				},{
+					title: '备注',
+					field: 'other',
+					align: 'center',
+					width: '16.2%'	
+				},
+
+			]]
+			var reIdName = $("#reIdName").val();
+			var fromDate = $("#fromDate").val();
+			var toDate = $("#toDate").val();
+			var idName = $("#school-condition").val();
+			$.ajax({
+				type:"get",
+				url:"http://192.168.0.9:8080/wisdomlucky/user/findBounsBySchool",
+				data:{
+					input:reIdName,
+					idName: idName,
+					start:fromDate,
+					end:toDate,
+					pageIndex:0,
+					size:100,
+				},
+				dataType:"json",
+				success:function(result){
+					if(result.success == true){
+						setTable(SchoolqueryRecommend,result.data.list,title);
+						$('#SchoolqueryRecommend').bootstrapTable('load', result.data.list);
+						$('.student-info').after($("<div class='pull-left line-height-59'>合计："+ result.data.count +"</div>"))
+					}
+				}
+			})
+		}
+		schoolStudentRecommend();
+		$(".school-bonus-search").click(function(){
+			//验证开始时间不能小于结束时间
+			var startdate=new Date(($("#fromDate").val()).replace(/年|月|日/g,"/"));
+	        var enddate=new Date(($("#toDate").val()).replace(/年|月|日/g,"/"));         
+	        var date = new Date(); 
+            if(startdate > enddate){
+                alert('开始日期不能小于结束日期');
+                return false;
+            }
+            $(".line-height-59").remove();
+			schoolStudentRecommend();
+		})
+	})
+		
+
+	</script>
+</body>
+</html>

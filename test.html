@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>测试</title>
+	<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link href="./css/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+	<div id="TbRoleList"></div>
+	
+	<script src="./js/jquery-3.1.1.js"></script>
+	<script src="./js/bootstrap.min.js"></script>
+	<script src="./js/bootstrap-table.min.js"></script>
+	<script src="./js/bootstrap-table-zh-CN.js"></script>
+	<script src="./js/dataTable.js"></script>
+	<script>
+	$(function(){
+
+		
+      setTable(TbRoleList);
+
+        });
+	
+	 formatter:function(value,row,index){  
+       var e = '<a href="javascript:(void);" onclick="findByID()" data-id="'+ row.id+'">编辑</a> ';  
+      
+            return e;  
+        } 
+	</script>
+</body>
+</html>

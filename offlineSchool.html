@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>线下大学堂</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<meta name="MobileOptimized" content="320">
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="./css/common.css" rel="stylesheet" type="text/css"/>
+	
+</head>
+<body>
+	<div class="container-fluid padding-0">
+		<div class="row top-nav">
+			<div class="col-md-12 ">
+				<div class="header-title clear">
+					<h2>大学堂</h2>
+				</div>
+			</div>
+		</div>
+		<div class="row main">
+			<div class="left-nav col-md-2 col-sm-2">
+				<h2>学校名</h2>
+				<h3>学校推荐码</h3>
+			</div>
+			<div class="content col-md-10 col-sm-10">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12 col-md-12 col-lg-12">
+							<h3>学员信息表</h3>
+						</div>
+					</div>
+					<div class="row search">
+						<div class="col-sm-12 col-md-12 col-lg-12">
+							<form class="form-inline">
+								<div class="form-group width-p-11">
+									<label class="sr-only" for="from-year"></label>
+									<div class="input-group">
+										<input type="text" class="form-control" id="from-year" placeholder="请输入年">
+      									<div class="input-group-addon">年</div>
+									</div>
+								</div>
+								<div class="form-group width-p-11">
+									<label class="sr-only" for="from-month"></label>
+									<div class="input-group">
+										<input type="text" class="form-control" id="from-month" placeholder="请输入月">
+      									<div class="input-group-addon">月</div>
+									</div>
+								</div>
+								<div class="form-group width-p-11">
+									<label class="sr-only" for="from-day"></label>
+									<div class="input-group">
+										<input type="text" class="form-control" id="from-day" placeholder="请输入日">
+      									<div class="input-group-addon">日</div>
+									</div>
+								</div>
+								<span>----------------------</span>
+								<div class="form-group width-p-11">
+									<label class="sr-only" for="to-year"></label>
+									<div class="input-group">
+										<input type="text" class="form-control" id="to-year" placeholder="请输入年">
+      									<div class="input-group-addon">年</div>
+									</div>
+								</div>
+								<div class="form-group width-p-11">
+									<label class="sr-only" for="to-month"></label>
+									<div class="input-group">
+										<input type="text" class="form-control" id="to-month" placeholder="请输入月">
+      									<div class="input-group-addon">月</div>
+									</div>
+								</div>
+								<div class="form-group width-p-11">
+									<label class="sr-only" for="to-day"></label>
+									<div class="input-group">
+										<input type="text" class="form-control" id="to-day" placeholder="请输入日">
+      									<div class="input-group-addon">日</div>
+									</div>
+								</div>
+								<button type="button" class="btn btn-primary btn-reward-search">查询</button>
+							</form>
+						</div>
+					</div>
+					<div class="row student-info">
+						<div class="col-md-12" id="grid1"></div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div id="page1"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<form action="" class="form-inline">
+								<div class="form-group">
+									<label class="sr-only" for="name-id"></label>
+									<div class="input-group">
+										<input type="text" class="form-control" id="name-id" placeholder="请输入姓名/ID">
+									</div>
+								</div>
+								<button type="button" class="btn btn-primary btn-details-search">查询</button>
+							</form>
+							
+						</div>
+					</div>
+					<div class="row student-info" >
+						<div class="col-md-12" id="grid2">
+							
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<h3>学员详情</h3>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<form action="" class="form-inline">
+								<div class="form-group student-details">
+									<label class="sr-only" for="student-details"></label>
+									<textarea class="student-details form-control" name="" id="student-details" cols="30" rows="10"></textarea>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<h3>申请实盘账号</h3>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<h3>待审核</h3>
+						</div>
+					</div>
+					<div class="row student-info" >
+						<div class="col-md-12" id="grid3">
+							
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<h3>已审核</h3>
+						</div>
+					</div>
+					<div class="row student-info" >
+						<div class="col-md-12" id="grid4">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- <div id="grid" style="width:1000px;"></div> -->
+	<script src="./js/jquery-3.1.1.js"></script>
+	<script src="./js/datagrid.js"></script>
+	<script src="./js/paging.js"></script>
+	<script src="./js/common.js"></script>
+	<script>
+
+	</script>
+</body>
+</html>

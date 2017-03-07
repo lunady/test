@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>我的推荐奖励查询</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<meta name="MobileOptimized" content="320">
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="./css/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
+<link href="./css/common.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="./css/bootstrap-datepicker.min.css" type="text/css">
+	
+</head>
+<body style="background:rgba(255,255,255,0.2);">
+	<div class="container-fluid right-content col-md-10">
+		<div class="row ">
+			<div class="col-md-12 ">
+				<h3 class="right-title"><span class="glyphicon glyphicon-piggy-bank"></span>  我的推荐奖励查询</h3>
+			</div>
+		</div>
+		<div class="row search">
+			<div class="col-sm-12 col-md-12 col-lg-12">
+				<form class="form-inline">
+					<div class="form-group width-p-14 ">
+						<label class="sr-only" for="from-day"></label>
+						<div class="input-group">
+							<input id="fromDate" size="16" type="text" value="" readonly class="form_datetime form-control  recommend-search" name="start" >
+							<div class="input-group-addon">
+						        <span class="glyphicon glyphicon-th"></span>
+						    </div>
+						</div>
+					</div>
+					<span class="data-sign"> &nbsp;  至  &nbsp;  </span>
+					<div class="form-group width-p-14 ">
+						<label class="sr-only" for="to-day"></label>
+						<div class="input-group">
+							<input id="toDate" size="16" type="text" value="" readonly class="form_datetime form-control  recommend-search" name="end" >
+							<div class="input-group-addon">
+						        <span class="glyphicon glyphicon-th"></span>
+						    </div>
+						</div>
+					</div>
+					<button type="button" class="btn btn-primary btn-search-time phoneBtns">按时间查询奖金查询</button>
+				</form>
+			</div>
+		</div>
+		<div class="row student-info">
+			<div class="col-md-12" id="queryRecommend" ></div>
+		</div>
+	</div>
+
+	<!-- <div id="grid" style="width:1000px;"></div> -->
+	<script src="./js/jquery-3.1.1.js"></script>
+	<script src="./js/bootstrap.min.js"></script>
+	<script src="./js/bootstrap-table.min.js"></script>
+	<script src="./js/bootstrap-table-zh-CN.js"></script>
+	<script src="./js/bootstrap-datepicker.min.js"></script>
+	<script src="./js/bootstrap-datepicker.zh-CN.js"></script>
+	<script src="./js/common.js"></script>
+	<script src="./js/dataTable.js"></script>
+	<script>
+			
+	$(function(){
+  		$(".form_datetime").datepicker({
+	        format: "yyyy年mm月dd日",
+	        language: 'zh-CN',
+	        autoclose: true,
+			weekStart : 0,
+			todayBtn :'linked',
+			startView: 'year',
+			minView:'month',
+			maxView:'decade',
+			pickerPosition: "bottom-right",
+	
+		});
+		function queryMyRecommend(){
+			var title=[[
+				{
+					title: 'id',
+					field: 'id',
+					align: 'center',	
+				},{
+					title: '姓名',
+					field: 'name',
+					align: 'center',	
+				},{
+					title: '学员类型',
+					field: 'type',
+					align: 'center',	
+				},{
+					title: '激活时间',
+					field: 'time',
+					align: 'center',	
+				},{
+					title: '推广奖金',
+					field: 'bouns',
+					align: 'center',	
+				},
+
+			]]
+			var fromDate = $("#fromDate").val();
+			var toDate = $("#toDate").val();
+			$.ajax({
+				url:"http://192.168.0.9:8080/wisdomlucky/bouns/find",
+				data:{
+					start:fromDate,
+					end:toDate,
+					pageIndex:0,
+					size:100
+				},
+				type:"post",
+				dataType:"json",
+				success:function(result){
+					if(result.success == true){
+						setTable(queryRecommend,result.data.list,title);
+						$('#queryRecommend').bootstrapTable('load', result.data.list);
+						$('.student-info').after($("<div class='pull-left line-height-59'>合计："+ result.data.count +"</div>"))
+					}
+				}
+			})
+		}
+		queryMyRecommend();
+		$(".btn-search-time").click(function(){
+			//验证开始时间不能小于结束时间
+			var startdate=new Date(($("#fromDate").val()).replace(/年|月|日/g,"/"));
+	        var enddate=new Date(($("#toDate").val()).replace(/年|月|日/g,"/"));         
+	        var date = new Date(); 
+            if(startdate > enddate){
+                alert('开始日期不能小于结束日期');
+                return false;
+            }
+            $(".line-height-59").remove();
+			queryMyRecommend();
+		})
+
+	})
+
+		
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>申请实盘账号</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<meta name="MobileOptimized" content="320">
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="./css/common.css" rel="stylesheet" type="text/css"/>
+	
+</head>
+<body style="background:rgba(255,255,255,0.2);">
+	<div class="container-fluid col-md-10  right-content">
+		<div class="row">
+			<div class="col-md-12 ">
+				<h3 class="right-title"><span class="glyphicon glyphicon-transfer"></span> 申请账实盘号</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<form action="" class="form-inline">
+					<div class="form-group student-details">
+						<label class="sr-only" for="learn-think"></label>
+						<textarea class="student-details form-control" name="conclusion" id="learn-think" cols="30" rows="10" placeholder="输入学习经历和操盘思路，不低于200字"></textarea>
+					</div>
+					<button id="apply-account" type="button" class="btn btn-primary margin-T-20">申请账号</button>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 situation">
+				<h3>审核情况</h3>
+			</div>
+		</div>
+	</div>
+
+	<!-- <div id="grid" style="width:1000px;"></div> -->
+	<script src="./js/jquery-3.1.1.js"></script>
+	
+	<script src="./js/common.js"></script>
+	<script>
+		$(function(){
+			$.ajax({
+				url:"http://192.168.0.9:8080/wisdomlucky/review/init",
+				dataType:"json",
+				type:"get",
+				success:function(result){
+					//console.log(result);
+					if(result.data == ""){
+						$(".situation").hide();
+					}else{
+						for(var i=0;i< result.data.length;i++){
+							if(result.data[i].text == "submit"){
+								$("<p>"+ result.data[i].date+" ：提交申请，请耐心等待1-2个工作日 "+"</p>").appendTo($(".situation"));
+							}
+							if(result.data[i].text == "false"){
+								$("<p>"+ result.data[i].date+" ：申请被拒绝，理由为："+ result.data[i].reason + "</p>").appendTo($(".situation"));
+							}
+							if(result.data[i].text == "true"){
+								$("<p>"+ result.data[i].date+" ：审核已通过，请耐心等待客服人员与您联系" +"</p>").appendTo($(".situation"));
+							}
+						}
+						
+					}
+						
+				}
+
+
+			})
+		})
+
+	</script>
+</body>
+</html>
