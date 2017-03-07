@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>学员信息表</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<meta name="MobileOptimized" content="320">
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="./css/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
+<link href="./css/common.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="./css/bootstrap-datepicker.min.css" type="text/css">
+	
+</head>
+<body style="background:rgba(255,255,255,0.2);">
+	<div class="container-fluid right-content">
+		<div class="row">
+			<div class="col-md-12 ">
+				<h3 class="right-title">学员信息表</h3>
+			</div>
+		</div>
+		<div class="form-group clear">				
+			<div class="col-sm-2">
+				<input type="text" class="form-control" id="id-name" name="phoneNumber" placeholder="请输入姓名或ID">
+			</div>
+			<div class="col-md-1 select">
+				<select name="id-name" id="id-name-condition">
+					<option value="id" >按ID查询</option>
+					<option value="name" >按姓名查询</option>
+				</select>
+			</div>
+			<div class="col-md-1 select">
+				<select name="type" id="type-condition">
+					<option value="all">全部学员</option>
+					<option value="普通">普通学员</option>
+					<option value="资深">资深学员</option>
+				</select>
+			</div>
+			<div class="col-md-1">
+				<button type="button" class="btn btn-primary school-student-grid">查询</button>
+			</div>
+		</div>
+		<div class="row margin-T-20">
+			<div class="col-md-12">
+				<div id="schoolStudentGrid">
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">学员详情</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal margin-T-20">
+					<fieldset disabled>
+						<div class="form-group">
+							<label for="school-student-id" class="col-sm-2 control-label">ID</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="school-student-id" name="id" placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="school-student-name" class="col-sm-2 control-label">姓名</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="school-student-name" name="name" placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="school-student-idCard" class="col-sm-2 control-label">身份证号</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="school-student-idCard" placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="school-student-type" class="col-sm-2 control-label">学员类型</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="school-student-type" placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="school-student-userCode" class="col-sm-2 control-label">推荐码</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="school-student-userCode" placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="from-school" class="col-sm-2 control-label">所属学校</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="from-school" placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="school-student-time" class="col-sm-2 control-label">激活时间</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="school-student-time" placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="contact" class="col-sm-2 control-label">联系方式</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="contact" placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="mail" class="col-sm-2 control-label">邮箱</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="mail" placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="bonus" class="col-sm-2 control-label">实盘账号</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="bonus" placeholder="">
+							</div>
+						</div>
+					</fieldset>
+				</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default closeModal" data-dismiss="modal">Close</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<script src="./js/jquery-3.1.1.js"></script>
+	<script src="./js/bootstrap.min.js"></script>
+	<script src="./js/bootstrap-table.min.js"></script>
+	<script src="./js/bootstrap-table-zh-CN.js"></script>
+	<script src="./js/bootstrap-datepicker.min.js"></script>
+	<script src="./js/bootstrap-datepicker.zh-CN.js"></script>
+	<script src="./js/common.js"></script>
+	<script src="./js/dataTable.js"></script>
+	<script>
+		
+		function schoolStudentInfo(){
+			var title = [[
+				{
+					title: '学员id',
+					field: 'id',
+					align: 'center',
+					width: '13.6%',	
+				},{
+					title: '姓名',
+					field: 'name',
+					align: 'center',
+					width: '13.6%',		
+				},{
+					title: '学员类型',
+					field: 'type',
+					align: 'center',
+					width: '13.6%',		
+				},{
+					title: '推荐码',
+					field: 'userCode',
+					align: 'center',	
+					width: '13.6%',	
+				},{
+					title: '所属学校',
+					field: 'school',
+					align: 'center',
+					width: '13.6%',		
+				},{
+					title: '激活时间',
+					field: 'time',
+					align: 'center',
+					width: '13.6%',		
+				},{
+					title: '联系方式',
+					field: 'phoneNumber',
+					align: 'center',
+					width: '13.6%',		
+				},{
+                      title: '操作',
+                      field: 'id',
+                      align: 'center',
+                      width: '13.6%',	
+                      formatter:function(value,row,index){  
+	                   var e = '<a href="#" class="school-student-details"  onclick="findById()" id="'+row.id+'">学员详情</a> ';  
+	                        return e;  
+	                    } 
+                  }
+				
+
+			]]
+			var input = $("#id-name").val();
+			var idNameCondition = $("#id-name-condition").val();
+			var typeCondition = $("#type-condition").val();
+			$.ajax({
+				url:"http://192.168.0.9:8080/wisdomlucky/user/findBySchool",
+				type:"get",
+				data:{
+					input:input,
+					idName:idNameCondition,	
+					type:typeCondition,
+					pageIndex:0,
+					size:100,
+
+				},
+				dataType:"json",
+				success:function(result){
+					if(result.success == true){
+						setTable(schoolStudentGrid,result.data,title);
+						$('#schoolStudentGrid').bootstrapTable('load', result.data);
+						function operateFormatter(value, row, index) {
+							return [
+							'<button type="button" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">操作</button>',
+							'<button type="button" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">B权限</button>',
+							].join('');
+						}
+					}
+				}
+			})
+		}
+		schoolStudentInfo();
+		$(".school-student-grid").click(function(){
+			schoolStudentInfo();
+		})
+		function findById(){
+			$('#myModal').removeClass("fade").show();
+			var studentId = event.target.id;
+			$.ajax({
+				type:"get",
+				url:"http://192.168.0.9:8080/wisdomlucky/user/findById",
+				data:{
+					id:studentId,
+				},
+				dataType:"json",
+				success:function(result){
+					if(result.success == true){
+						$("#school-student-id").val(result.data.id);
+						$("#school-student-name").val(result.data.name);
+						$("#school-student-type").val(result.data.type);
+						$("#school-student-time").val(result.data.time);
+						$("#school-student-idCard").val(result.data.idCard);
+						$("#contact").val(result.data.phoneNumber);
+						$("#mail").val(result.data.mail);
+						$("#bonus").val(result.data.number);
+						$("#userCode").val(result.data.userCode);
+						$("#from-school").val(result.data.school);
+					}
+				}
+			})		
+					
+		}
+		$(".closeModal").click(function(){
+			$('#myModal').hide();
+		})
+	</script>
+</body>
+</html>

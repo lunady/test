@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>实盘账号审核</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<meta name="MobileOptimized" content="320">
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="./css/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
+<link href="./css/common.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="./css/bootstrap-datepicker.min.css" type="text/css">
+	
+</head>
+<body style="background:rgba(255,255,255,0.2);">
+	<div class="container-fluid right-content">
+		<div class="row">
+			<div class="col-md-12 ">
+				<h3  class="right-title">实盘账号审核</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 ">
+				<h3>待审核</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div id="schoolAccount">
+
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 ">
+				<h3>已审核</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div id="schoolAccountAgree">
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">请输入理由</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group clear">
+						<div class="col-sm-12">
+							<textarea class="form-control " name="" id="reason" cols="30" rows="10" style="resize:none;"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary submit-reason" data-dismiss="modal">提交</button>
+					<button type="button" class="btn btn-default closeModal" data-dismiss="modal">关闭</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<script src="./js/jquery-3.1.1.js"></script>
+	<script src="./js/bootstrap.min.js"></script>
+	<script src="./js/bootstrap-table.min.js"></script>
+	<script src="./js/bootstrap-table-zh-CN.js"></script>
+	<script src="./js/bootstrap-datepicker.min.js"></script>
+	<script src="./js/bootstrap-datepicker.zh-CN.js"></script>
+	<script src="./js/common.js"></script>
+	<script src="./js/dataTable.js"></script>
+	<script>
+		
+			//待审核表格
+		function schoolActing(){
+			var title = [[
+				{
+					title: '学员id',
+					field: 'id',
+					align: 'center',	
+				},{
+					title: '姓名',
+					field: 'name',
+					align: 'center',	
+				},{
+					title: '学员提交的总结',
+					field: 'conclusion',
+					align: 'center',
+					
+				},{
+					title: '操作',
+					field: 'id',
+					align: 'center',
+					formatter:function(value,row,index){  
+				       return [
+							'<button type="button"  onclick="inputReason()"  class=" btn btn-default btn-sm" style="margin-right:15px;" id="agree$' + row.id +'">同意</button>',
+							'<button type="button" onclick="inputReason()" class=" btn btn-default btn-sm" style="margin-right:15px;" id="disagree$'+ row.id +'">拒绝</button>',
+							].join('');
+				        } 	
+				},
+
+			]]
+		
+			$.ajax({
+				type:"get",
+				url:"http://192.168.0.9:8080/wisdomlucky/review/findActing",
+				data:{
+					pageIndex:0,
+					size:100,
+				},
+				dataType:"json",
+				success:function(result){
+					if(result.success == true){
+						setTable(schoolAccount,result.data,title);
+						$('#schoolAccount').bootstrapTable('load', result.data.list);
+						
+					}
+				}
+			})
+		}
+		schoolActing();
+		//已审核表格
+		function schoolActed(){
+			var title = [[
+				{
+					title: '学员id',
+					field: 'id',
+					align: 'center',	
+				},{
+					title: '姓名',
+					field: 'name',
+					align: 'center',	
+				},{
+					title: '同意或者拒绝的理由',
+					field: 'reason',
+					align: 'center',	
+				},{
+					title: '审核时间',
+					field: 'date',
+					align: 'center',	
+				},{
+					title: '审查结果',
+					field: 'state',
+					align: 'center',	
+				},{
+					title: '账号',
+					field: 'account',
+					align: 'center',	
+				},
+
+
+			]]
+			$.ajax({
+				type:"get",
+				url:"http://192.168.0.9:8080/wisdomlucky/review/findActed",
+				data:{
+					pageIndex:0,
+					size:100,
+				},
+				dataType:"json",
+				success:function(result){
+					if(result.success == true){
+						setTable(schoolAccountAgree,result.data,title);
+						$('#schoolAccountAgree').bootstrapTable('load', result.data.list);
+						
+					}
+				}
+			})
+		}
+		schoolActed();
+		//同意或拒绝按钮事件
+		function inputReason(){
+			var id = event.target.id;
+			var studentId = id.split("$")[1];
+			var state = id.split("$")[0];
+			if(state == "agree"){
+				state = "同意";
+			}else if(state == "disagree"){
+				state = "拒绝"
+			}
+			console.log(studentId)
+			console.log(state)
+			$(".submit-reason").click(function(){
+				var reason = $("#reason").val();
+				$.ajax({
+					url:"http://192.168.0.9:8080/wisdomlucky/review/dopose",
+					type:"get",
+					data:{
+						state:state,
+						id:studentId,
+						reason:reason,
+					},
+					dataType:"json",
+					success:function(result){
+						$('#myModal').hide();
+						location.href = "file:///C:/work/workspace/offlineSchool/school-account.html";
+
+					}
+				})
+			})
+			$('#myModal').removeClass("fade").show();
+		}
+		//关闭弹窗
+		$(".closeModal").click(function(){
+			$('#myModal').hide();
+		})
+
+		//dopose 
+	</script>
+</body>
+</html>

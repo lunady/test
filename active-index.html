@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>学员主页-已激活</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<meta name="MobileOptimized" content="320">
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+
+<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="./css/common.css" rel="stylesheet" type="text/css"/>
+<link href="./css/active-index.css" rel="stylesheet" type="text/css"/>
+
+</head>
+<body style="overflow:hidden;">
+
+	<div class="container-fluid padding-0 wraper">
+		<div class="row top-nav">
+			<div class="col-md-12 ">
+				<div class="header-title clear">
+					<div  class="col-md-2 col-sm-3 ">
+						<h2 class="pull-left">大学堂</h2>
+						<span class="glyphicon glyphicon-menu-hamburger hide-icon pull-right" id="hide_left"></span>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="row main">
+			<div class="left-nav col-md-2 hidden-sm " id="left_nav" style="display: block">
+				<span class="glyphicon glyphicon-education left-nav-icon"></span>
+				<div class="left-info-id">
+					<h4><span>ID：</span><span>123456</span></h4>
+				</div>
+
+				<div class="left-info">
+					<span>激活时间：</span><span>2017年2月14日</span>
+				</div>
+
+				<div class="left-buttons">
+					<p type="button" class="" id="myStudent"><span class="glyphicon glyphicon-user"></span> &nbsp; 我推荐的学员</p>
+					<p type="button" class="" id="myRecommend"><span class="glyphicon glyphicon-piggy-bank"></span> &nbsp;我的推荐奖励</p>
+					<p type="button" class="" id="applyAccount"><span class="glyphicon glyphicon-transfer"></span> &nbsp;申请实盘账号</p>
+					<p type="button" class="" id="myInfo"><span class="glyphicon glyphicon-list-alt"></span> &nbsp;我的资料</p>
+				</div>
+
+			</div>
+			<div class="content col-md-10 col-sm-12 col-xs-12 padding-0 right-main hidden-xs" id="right_main">
+				<iframe src="active-myStudents.html" id="myiframe" name="myiframe" width="100%"  scrolling-x="no" frameborder="0" onload="changeFrameHeight()" style="padding-bottom:50px"></iframe>
+			</div>
+		</div>
+	</div>
+
+	<!-- <div id="grid" style="width:1000px;"></div> -->
+	<script src="./js/jquery-3.1.1.js"></script>
+	
+	<script src="./js/index.js"></script>
+	<script>
+		//iframe高度自适应
+		function changeFrameHeight(){
+			var ifm= document.getElementById("myiframe");
+			ifm.height=document.documentElement.clientHeight;
+		}
+		window.onresize=function(){
+		     changeFrameHeight();  
+		}
+
+	</script>
+</body>
+</html>

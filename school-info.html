@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>学校修改信息</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<meta name="MobileOptimized" content="320">
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="./css/common.css" rel="stylesheet" type="text/css"/>
+	
+</head>
+<body style="background:rgba(255,255,255,0.2);">
+	<div class="container-fluid right-content col-md-8">
+		<div class="row">
+			<div class="col-md-12 ">
+				<h3 class="right-title"><span class="glyphicon glyphicon-list-alt"></span> 修改信息</h3>
+			</div>
+		</div>
+		<form class="form-horizontal margin-T-20 user-info">
+			<div class="form-group">
+				<label for="school-old-password" class="col-sm-2 control-label">原密码</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="school-old-password" name="oldPassword" placeholder="">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="school-new-password" class="col-sm-2 control-label">新密码</label>
+				<div class="col-sm-5">
+					<input type="password" class="form-control" id="school-new-password" name="newPassword" placeholder="">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="school-new-password2" class="col-sm-2 control-label">确认密码</label>
+				<div class="col-sm-5">
+					<input type="password" class="form-control" id="school-new-password2" placeholder="">
+				</div>
+			</div>
+			<div class="col-sm-7">
+				<button type="button" class="btn btn-primary school-edit-password pull-right" >确认修改</button>
+			</div>
+	</form>
+	</div>
+	<!-- <div id="grid" style="width:1000px;"></div> -->
+	<script src="./js/jquery-3.1.1.js"></script>
+	
+	<script src="./js/common.js"></script>
+	<script>
+		$(function(){
+			$(".school-edit-password").click(function(){
+				var oldPassword = $("#school-old-password").val();
+				var newPassword = $("#school-new-password").val();
+				var newPassword2 = $("#school-new-password2").val();
+				if(newPassword == newPassword2){
+					$.ajax({
+						url:"http://192.168.0.9:8080/wisdomlucky/school/updatePassword",
+						data:{
+							oldPassword:oldPassword,
+							newPassword:newPassword,
+						},
+						type:"post",
+						dataType:"json",
+						success:function(result){
+							if (result.success == true) {
+								alert("修改成功")
+							}
+							
+						}
+					})
+				}
+
+			})
+		})
+		
+
+	</script>
+</body>
+</html>
